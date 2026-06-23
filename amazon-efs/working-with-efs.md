@@ -12,17 +12,18 @@ aws ec2 authorize-security-group-ingress --group-name StorageLabs --protocol tcp
 ```
 3. Launch instance in US-EAST-1A
 ```
-aws ec2 run-instances --image-id ami-0440d3b780d96b29d --instance-type t2.micro --placement AvailabilityZone=us-east-1a --security-group-ids <SECURITY-GROUP-ID>
+aws ec2 run-instances --image-id ami-0440d3b780d96b29d --instance-type t2.micro --placement AvailabilityZone=us-east-1a --security-group-ids sg-0ab40e0684de6a9bc
 ```
 4. Launch instance in US-EAST-1B
 ```
-aws ec2 run-instances --image-id ami-0440d3b780d96b29d --instance-type t2.micro --placement AvailabilityZone=us-east-1b --security-group-ids <SECURITY-GROUP-ID>
+aws ec2 run-instances --image-id ami-0440d3b780d96b29d --instance-type t2.micro --placement AvailabilityZone=us-east-1b --security-group-ids sg-0ab40e0684de6a9bc
 ```
 
 ## Create an EFS File System
 1. Add a rule to the security group to allow the NFS protocol from group members
-
-```aws ec2 authorize-security-group-ingress --group-id <SECURITY-GROUP-ID> --protocol tcp --port 2049 --source-group <SECURITY-GROUP-ID>```
+```
+aws ec2 authorize-security-group-ingress --group-id sg-0ab40e0684de6a9bc --protocol tcp --port 2049 --source-group sg-0ab40e0684de6a9bc
+```
 
 2. Create an EFS file system through the console, and add the StorageLabs security group to the mount targets for each AZ
 
